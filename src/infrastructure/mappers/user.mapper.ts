@@ -3,7 +3,6 @@ import { CustomError, UserEntity } from "../../domain";
 export class UserMapper {
 
     static userEntityFromObject(object: {[key: string]: any}) {
-       console.log("entre");
         const { _id, name, email, password } = object;
 
         if( !_id) {

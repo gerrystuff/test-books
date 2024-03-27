@@ -4,6 +4,6 @@ import { UserEntity } from "../entities/user.entity";
 export abstract class AuthDatasource {
 
     abstract register( registerUserDto: RegisterUserDto ): Promise<UserEntity>;
-    
+    abstract signIn( email: string, password: string ): Promise<UserEntity>;
 
 }

@@ -49,8 +49,41 @@ export class AuthDatasourceImpl extends AuthDatasource {
 
             throw CustomError.internal();
         }
+        
+    }
+
+
+    async signIn(email: string, password: string): Promise<UserEntity> {
+
+        try {
+
+            // Obtener la colección de usuarios
+            const usersCollection = await MongoDatabase.getCollection('users');
+
+            // Verificar si existe un usuario con el mismo email
+            const user = await usersCollection.findOne({ email: email });
+
+            if (!user)
+                throw CustomError.notFound('User not found');
+
+            // Verificar si la contraseña es correcta
+            if (!BcryptAdapter.compare(password, user.password))
+                throw CustomError.unauthorized('Invalid password');
+
+            return UserMapper.userEntityFromObject(user);
+
+        } catch (error) {
+
+            if (error instanceof CustomError)
+                throw error;
+
+            throw CustomError.internal();
+        }
 
     }
+
+
+
 
 
 }
