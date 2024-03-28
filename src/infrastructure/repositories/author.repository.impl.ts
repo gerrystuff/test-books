@@ -1,4 +1,5 @@
 import { AuthorDatasource, AuthorEntity, AuthorRepository, CreateAuthorDto } from "../../domain";
+import { UpdateAuthorDto } from "../../domain/dtos/author/update-author.dto";
 
 export class AuthorRepositoryImpl implements AuthorRepository {
 
@@ -12,8 +13,8 @@ export class AuthorRepositoryImpl implements AuthorRepository {
 
     }
 
-    async update(createAuthorDto:CreateAuthorDto): Promise<AuthorEntity> {
-        return this.datasource.update(createAuthorDto);
+    async update(updateAuthorDto:UpdateAuthorDto, id:string): Promise<AuthorEntity> {
+        return this.datasource.update(updateAuthorDto,id);
     }
 
     async delete(id:string): Promise<AuthorEntity> {
@@ -32,5 +33,10 @@ export class AuthorRepositoryImpl implements AuthorRepository {
         return this.datasource.massive(createAuthorDto);
     }
 
+
+    async searchAuthors(searchTerm:string, page:number ,pagesize:number,sort:string): Promise<AuthorEntity[]> {
+        return this.datasource.searchAuthors(searchTerm, page , pagesize,sort);
+    }
+        
 
 }

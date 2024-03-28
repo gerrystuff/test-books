@@ -1,4 +1,5 @@
 import { BookDatasource, BookEntity, BookRepository, CreateBookDto } from "../../domain";
+import { UpdateBookDto } from "../../domain/dtos/book/update-book.dto";
 
 export class BookRepositoryImpl implements BookRepository {
     constructor(
@@ -9,8 +10,8 @@ export class BookRepositoryImpl implements BookRepository {
         return this.datasource.create(createBookDto);
     }
 
-    async update(createBookDto:CreateBookDto): Promise<BookEntity> {
-        return this.datasource.update(createBookDto);
+    async update(updateBookDto:UpdateBookDto,id:string): Promise<BookEntity> {
+        return this.datasource.update(updateBookDto,id);
     }
 
     async delete(id:string): Promise<BookEntity> {
@@ -23,5 +24,9 @@ export class BookRepositoryImpl implements BookRepository {
 
     async list(): Promise<BookEntity[]> {
         return this.datasource.list();
+    }
+
+    async searchBooks(searchTerm:string,page:number,pageSize:number,sort:string): Promise<BookEntity[]> {
+        return this.datasource.searchBooks(searchTerm,page,pageSize,sort);
     }
 }

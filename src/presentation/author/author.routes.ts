@@ -21,7 +21,14 @@ export class AuthorRoutes {
 
         router.get('/',controller.getAllAuthors)
 
+        router.get('/:id',controller.getAnAuthor)
 
+        router.delete('/:id',controller.deleteAnAuthor)
+
+
+        router.put('/:id',controller.updateAnAuthor)
+
+        router.get('/search/:searchTerm',controller.searchAuthors)
 
 
         return router;

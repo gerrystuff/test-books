@@ -4,5 +4,6 @@ export class BookEntity {
         public title: string,
         public authorId: string,
         public price: number,
+        public category: string,
     ) { }
 }

@@ -1,0 +1,77 @@
+[
+    {
+        "name": "Joshua Lee",
+        "email": "kramirez@example.org",
+        "birthdate": "1959-12-17"
+    },
+    {
+        "name": "Melissa Johnson",
+        "email": "brenda42@example.com",
+        "birthdate": "1954-06-05"
+    },
+    {
+        "name": "Brittany Miller",
+        "email": "sgonzalez@example.com",
+        "birthdate": "1975-09-28"
+    },
+    {
+        "name": "Cheryl Smith",
+        "email": "gomeztony@example.net",
+        "birthdate": "1953-10-10"
+    },
+    {
+        "name": "Cynthia Moore",
+        "email": "kayla30@example.com",
+        "birthdate": "1985-12-20"
+    },
+    {
+        "name": "Danielle Williams",
+        "email": "rileybrian@example.org",
+        "birthdate": "1993-05-03"
+    },
+    {
+        "name": "David Gomez",
+        "email": "jhansen@example.net",
+        "birthdate": "1992-08-02"
+    },
+    {
+        "name": "Thomas Lynch",
+        "email": "harrisbobby@example.org",
+        "birthdate": "1986-01-29"
+    },
+    {
+        "name": "Tracy Rodriguez",
+        "email": "malikclark@example.net",
+        "birthdate": "1978-03-07"
+    },
+    {
+        "name": "Patricia Taylor",
+        "email": "michelle79@example.com",
+        "birthdate": "1968-07-27"
+    },
+    {
+        "name": "John Ortiz",
+        "email": "haroldsmith@example.net",
+        "birthdate": "1961-05-22"
+    },
+    {
+        "name": "Jennifer Jones",
+        "email": "gutierrezdebbie@example.net",
+        "birthdate": "1958-07-18"
+    },
+    {
+        "name": "Rebecca White",
+        "email": "lindahill@example.com",
+        "birthdate": "1957-01-19"
+    },
+    {
+        "name": "Anthony Stewart",
+        "email": "carol88@example.org",
+        "birthdate": "1965-04-10"
+    },
+    {
+        "name": "Kathleen Jenkins",
+        "email": "zmiller@example.org",
+        "birthdate": "1983-04-15"
+    }
+]

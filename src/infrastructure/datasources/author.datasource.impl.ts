@@ -1,6 +1,10 @@
+import { ObjectId } from "mongodb";
 import { MongoDatabase } from "../../data/mongodb";
 import { AuthorDatasource, AuthorEntity, CreateAuthorDto, CustomError } from "../../domain";
 import { AuthorMapper } from "../mappers/author.mapper";
+import { BSONError } from "bson";
+import { UpdateAuthorDto } from "../../domain/dtos/author/update-author.dto";
+import { cleanObject } from "../../domain/handlers/objects.handler";
 
 export class AuthorDatasourceImpl implements AuthorDatasource {
 
@@ -47,14 +51,102 @@ export class AuthorDatasourceImpl implements AuthorDatasource {
 
         }
     }
-    update(createAuthorDto: any): Promise<any> {
-        throw new Error("Method not implemented.");
+
+
+   async update(updateAuthorDto: UpdateAuthorDto,id:string): Promise<AuthorEntity> {
+
+
+
+        try {
+
+
+             const authorsCollection = await MongoDatabase.getCollection('authors');
+
+             if(updateAuthorDto.email){
+                const author = await authorsCollection.findOne({ email: updateAuthorDto.email });
+
+                if (author)
+                    throw CustomError.conflict('Email already exists');
+             }
+             
+            const author = await authorsCollection.findOne({ _id: new ObjectId(id) });
+
+            if (!author)
+                throw CustomError.notFound('Author not found');
+
+           
+                cleanObject(updateAuthorDto);
+
+                await authorsCollection.updateOne({ _id: new ObjectId(id) }, {
+                    $set: updateAuthorDto
+                });
+
+                const updatedAuthor = await authorsCollection.findOne({ _id: new ObjectId(id) });
+
+                return AuthorMapper.authorEntityFromObject(updatedAuthor);
+
+
+        } catch (error) {
+            if (error instanceof BSONError)
+                throw CustomError.badRequest('Invalid ID format');
+
+            if (error instanceof CustomError)
+                throw error;
+
+            throw CustomError.internal();
+        }
+
+
+
     }
-    delete(id: string): Promise<any> {
-        throw new Error("Method not implemented.");
+
+   async delete(id: string): Promise<AuthorEntity> {
+
+        try {
+            const authorsCollection = await MongoDatabase.getCollection('authors');
+
+            const author = await authorsCollection.findOne({ _id: new ObjectId(id) });
+
+            if (!author)
+                throw CustomError.notFound('Author not found');
+
+            await authorsCollection.deleteOne({ _id: new ObjectId(id) });
+
+
+            return AuthorMapper.authorEntityFromObject(author);
+
+        } catch (error) {
+            if (error instanceof BSONError)
+                throw CustomError.badRequest('Invalid ID format');
+
+            if (error instanceof CustomError)
+                throw error;
+
+            throw CustomError.internal();
+        }
     }
-    get(id: string): Promise<any> {
-        throw new Error("Method not implemented.");
+
+
+   async  get(id: string): Promise<AuthorEntity> {
+        try {
+            const authorsCollection = await MongoDatabase.getCollection('authors');
+
+            const author = await authorsCollection.findOne({ _id: new ObjectId(id) });
+
+            if (!author)
+                throw CustomError.notFound('Author not found');
+
+            return AuthorMapper.authorEntityFromObject(author);
+            
+        } catch (error) {
+            if (error instanceof BSONError )
+            throw CustomError.badRequest('Invalid ID format');
+
+            if (error instanceof CustomError)
+            throw error;
+        
+        throw CustomError.internal();
+        }
     }
     async list(): Promise<AuthorEntity[]> {
         try {
@@ -125,6 +217,31 @@ export class AuthorDatasourceImpl implements AuthorDatasource {
 
 
 
+    }
+
+    async searchAuthors(searchTerm: string, page:number, pageSize:number,sort:string): Promise<AuthorEntity[]> {
+        try {
+            const authorsCollection = await MongoDatabase.getCollection('authors');
+
+            const authors = await authorsCollection.find({
+                $or: [
+                    { name: { $regex: searchTerm, $options: 'i' } },
+                    { email: { $regex: searchTerm, $options: 'i' } }
+                ]
+            })
+            .sort({name:sort === 'asc' ? 1 : -1}) // Sort by name
+            .skip((page - 1) * pageSize)
+            .limit(pageSize).toArray();
+
+            
+            return authors.map(AuthorMapper.authorEntityFromObject);
+
+        } catch (error) {
+            if (error instanceof CustomError)
+                throw error;
+
+            throw CustomError.internal();
+        }
     }
 
 }

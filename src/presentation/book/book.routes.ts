@@ -18,7 +18,10 @@ export class BookRoutes {
         
         router.post('/',controller.createBook)
         router.get('/',controller.getAllBooks)
-
+        router.get('/:id',controller.getABook)
+        router.delete('/:id',controller.deleteABook)
+        router.put('/:id',controller.updateABook)
+        router.get('/search/:searchTerm',controller.searchBooks)
 
 
 
