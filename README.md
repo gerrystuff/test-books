@@ -1,5 +1,19 @@
 # README
 
+
+server url: https://test-books.onrender.com/docs/#
+
+
+## PASOS PARA LA INSTALACION LOCAL
+
+ - git clone 
+ - copiar .env en la carpeta raiz del proyecto
+ - npm i
+ - npm run dev 
+
+ 
+
+
 Los componentes principales son:
 
 - `src/domain/`: Aquí es donde reside la lógica de negocio. Incluye entidades, interfaces de repositorios e interfaces de fuentes de datos.
