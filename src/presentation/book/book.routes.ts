@@ -135,8 +135,6 @@ export class BookRoutes {
  *       required: true
  *       content:
  *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Book'
  *     responses:
  *       200:
  *         description: Book successfully updated.
