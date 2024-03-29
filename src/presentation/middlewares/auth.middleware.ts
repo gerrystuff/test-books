@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { JwtAdapter } from "../../config/jwt";
-import { MongoDatabase } from "../../data/mongodb";
 import { ObjectId } from "mongodb";
-
+import { MongoDatabase } from "../../data";
 
 export class AuthMiddleware {
 

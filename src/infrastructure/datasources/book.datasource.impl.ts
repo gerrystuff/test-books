@@ -1,5 +1,4 @@
 import { ObjectId } from "mongodb";
-import { MongoDatabase } from "../../data/mongodb";
 import { BookEntity, CustomError } from "../../domain";
 import { BookDatasource } from "../../domain/datasources/book.datasource";
 import { CreateBookDto } from "../../domain/dtos/book/create-book.dto";
@@ -7,6 +6,7 @@ import { BookMapper } from "../mappers/book.mapper";
 import { BSONError } from 'bson';
 import { UpdateBookDto } from "../../domain/dtos/book/update-book.dto";
 import { cleanObject } from "../../domain/handlers/objects.handler";
+import { MongoDatabase } from "../../data";
 
 export class BookDatasourceImpl extends BookDatasource {
 

@@ -1,7 +1,7 @@
-import { MongoDatabase } from "../../data/mongodb";
 import { CustomError, RegisterUserDto, UserEntity, AuthDatasource } from "../../domain/index";
 import { BcryptAdapter } from "../../config/index";
 import { UserMapper } from "../mappers/user.mapper";
+import { MongoDatabase } from "../../data";
 
 export class AuthDatasourceImpl extends AuthDatasource {
 

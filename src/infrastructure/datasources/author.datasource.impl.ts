@@ -1,10 +1,10 @@
 import { ObjectId } from "mongodb";
-import { MongoDatabase } from "../../data/mongodb";
 import { AuthorDatasource, AuthorEntity, CreateAuthorDto, CustomError } from "../../domain";
 import { AuthorMapper } from "../mappers/author.mapper";
 import { BSONError } from "bson";
 import { UpdateAuthorDto } from "../../domain/dtos/author/update-author.dto";
 import { cleanObject } from "../../domain/handlers/objects.handler";
+import { MongoDatabase } from "../../data";
 
 export class AuthorDatasourceImpl implements AuthorDatasource {
 
