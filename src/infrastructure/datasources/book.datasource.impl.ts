@@ -63,7 +63,7 @@ export class BookDatasourceImpl extends BookDatasource {
             const book = await booksCollection.insertOne({
                 title,
                 price,
-                authorId: new ObjectId(authorId),
+                authorId: authorId,
                 category
             });
 
