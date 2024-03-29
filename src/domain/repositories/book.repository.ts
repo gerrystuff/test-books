@@ -10,6 +10,7 @@ export abstract class BookRepository {
     abstract get(id:string):Promise<BookEntity>;
     abstract list():Promise<BookEntity[]>;
     abstract searchBooks(searchTerm:string,page:number,pageSize:number,sort:string):Promise<BookEntity[]>;
+    abstract searchBooksByAuthor(authorId:string, page:number,pageSize:number,sort:string):Promise<BookEntity[]>;
 
 }
 

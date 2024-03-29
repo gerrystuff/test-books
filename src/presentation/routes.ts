@@ -1,22 +1,37 @@
 import { Router } from 'express';
 import { AuthRoutes, BookRoutes, AuthorRoutes } from './';
 
+
 export class AppRoutes {
     static get routes(): Router {
         const router = Router();
-
-    
-        // Versión 1 de la API
-        const apiV1Router = Router();
+        const api = Router();
 
         // Rutas al router de la versión 1
-        apiV1Router.use('/auth', AuthRoutes.routes);
-        apiV1Router.use('/books', BookRoutes.routes);
-        apiV1Router.use('/authors', AuthorRoutes.routes);
+        api.use('/auth', AuthRoutes.routes);
+        api.use('/books', BookRoutes.routes);
+        api.use('/authors', AuthorRoutes.routes);
 
+        /**
+   * @openapi
+   * /api/v1/healtcheck:
+   *  get:
+   *     tags:
+   *      - Healtcheck
+   *     description: Verifica que la API esté arriba y corriendo
+   *     responses:
+   *      200:
+   *         description: API is up and running
+   * 
+   */
+        api.get('/healtcheck', (req, res) => {
+            res.status(200).json({ message: 'API is up and running' });
+        });
 
-        // Usa el router de la versión 1 en tu router principal con el prefijo '/api/v1'
-        router.use('/api/v1', apiV1Router);
+        const API_VERSION = process.env.API_VERSION || 'v1';
+
+        router.use(`/api/${API_VERSION}`, api);
+
 
         return router;
     }

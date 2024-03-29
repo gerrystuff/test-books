@@ -1,8 +1,9 @@
 import { AuthorRepository, CreateAuthorDto } from "../../domain";
 import { MassiveCreateAuthorDto } from "../../domain/dtos/author/masive-create-author.dto";
 import { UpdateAuthorDto } from "../../domain/dtos/author/update-author.dto";
-import { handleError } from "../../domain/handlers/error.handler";
+import { handleError} from "../../domain/handlers/error.handler";
 import { Request, Response } from 'express';
+import { handleSuccess } from "../../domain/handlers/success.handler";
 
 export class AuthorController{
     constructor(
@@ -20,9 +21,7 @@ export class AuthorController{
             if( error ) return response.status(400).json({ message: error });
     
             this.authorRepository.create(createAuthorDto!)
-                .then( author => {
-                    response.json(author)
-                })
+                .then( author => handleSuccess(author, response))
                 .catch( error => handleError(error, response)); 
 
             }
@@ -35,9 +34,7 @@ export class AuthorController{
         if( error ) return response.status(400).json({ message: error });
 
         this.authorRepository.massive(massiveCreateAuthorDto!.authors)
-            .then( authors => {
-                response.json(authors)
-            })
+            .then( authors => handleSuccess(authors, response))
             .catch( error => handleError(error, response));
 
     }
@@ -46,9 +43,7 @@ export class AuthorController{
     getAllAuthors = async(req:Request, response:Response) => {
             
             this.authorRepository.list()
-                .then( authors => {
-                    response.json(authors)
-                })
+                .then( authors => handleSuccess(authors, response))
                 .catch( error => handleError(error, response));
     
         }
@@ -56,9 +51,7 @@ export class AuthorController{
     getAnAuthor = async(req:Request, response:Response) => {
                 
                 this.authorRepository.get(req.params.id)
-                    .then( author => {
-                        response.json(author)
-                    })
+                    .then( author => handleSuccess(author, response))
                     .catch( error => handleError(error, response));
         
             }
@@ -67,9 +60,7 @@ export class AuthorController{
   deleteAnAuthor = async(req:Request, response:Response) => {
                     
                     this.authorRepository.delete(req.params.id)
-                        .then( author => {
-                            response.json(author)
-                        })
+                        .then( author => handleSuccess(author, response))
                         .catch( error => handleError(error, response));
             
                 }
@@ -86,9 +77,7 @@ export class AuthorController{
         if( error ) return response.status(400).json({ message: error });
 
         this.authorRepository.update(updateAuthorDto!, id)
-            .then( author => {
-                response.json(author)
-            })
+            .then( author => handleSuccess(author, response))
             .catch( error => handleError(error, response));
 
     }
@@ -106,9 +95,7 @@ export class AuthorController{
 
         
         this.authorRepository.searchAuthors(searchTerm, page, pageSize, sort)
-            .then( authors => {
-                response.json(authors)
-            })
+            .then( authors => handleSuccess(authors, response))
             .catch( error => handleError(error, response));
 
     }

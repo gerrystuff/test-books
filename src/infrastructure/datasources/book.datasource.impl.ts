@@ -80,6 +80,10 @@ export class BookDatasourceImpl extends BookDatasource {
 
 
         } catch (error) {
+
+            if(error instanceof BSONError)
+                throw CustomError.badRequest('Invalid ID format');
+            
             if (error instanceof CustomError)
                 throw error;
 
@@ -194,6 +198,26 @@ export class BookDatasourceImpl extends BookDatasource {
             .skip(pageSize * (page - 1)).limit(pageSize).toArray();
 
             
+            return books.map(BookMapper.bookEntityFromObject);
+
+        } catch (error) {
+            if (error instanceof CustomError)
+                throw error;
+
+            throw CustomError.internal();
+        }
+    }
+
+
+    async searchBooksByAuthor(authorId: string,page:number,pageSize:number,sort:string): Promise<BookEntity[]> {
+
+        try {
+            const booksCollection = await MongoDatabase.getCollection('books');
+
+            const books = await booksCollection.find({ authorId: authorId })
+            .sort({ title: sort === 'asc' ? 1 : -1 })
+            .skip(pageSize * (page - 1)).limit(pageSize).toArray();
+
             return books.map(BookMapper.bookEntityFromObject);
 
         } catch (error) {

@@ -29,4 +29,8 @@ export class BookRepositoryImpl implements BookRepository {
     async searchBooks(searchTerm:string,page:number,pageSize:number,sort:string): Promise<BookEntity[]> {
         return this.datasource.searchBooks(searchTerm,page,pageSize,sort);
     }
+
+    async searchBooksByAuthor(authorId:string, page:number,pageSize:number,sort:string): Promise<BookEntity[]> {
+        return this.datasource.searchBooksByAuthor(authorId,page,pageSize,sort);
+    }
 }

@@ -23,4 +23,6 @@ async function main() {
         port: 8080,
         routes: AppRoutes.routes
     }).start();
+
+
 }
